@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "科技文献抽取"
+  short_description: "从论文 PDF 解构内容，并按用户意图调用五类文献抽取接口。"
+  default_prompt: "请使用 literature-extraction skill 对论文 PDF 执行科技文献抽取任务。"

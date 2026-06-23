@@ -1,0 +1,11 @@
+.env
+*.env
+*.log
+__pycache__/
+*.pyc
+outputs/
+代码+prompt/
+raw_response.txt
+prompt_input.txt
+error.txt
+*.request.json
