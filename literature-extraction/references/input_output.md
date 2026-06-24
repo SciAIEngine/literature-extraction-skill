@@ -7,7 +7,7 @@ The user provides a PDF file path that is readable from the machine where `scrip
 Example:
 
 ```text
-/data3/SciAIEngine3.0/projects/sunxi/Chain of Thought.pdf
+./paper.pdf
 ```
 
 ## Pipeline
@@ -54,11 +54,20 @@ article.md
 The task extraction stage sends multipart form requests with:
 
 - `LLM_MODEL`
-- `LLM_API_KEY`
 - `LLM_BASE_URL`
 - `Stream`
 - `extra_input`
 - `file`
+
+`LLM_API_KEY` is optional. If it is set in the local environment, the script passes it for backward compatibility. If it is not set, the script omits it and the task endpoint should use its server-side default credential.
+
+## Timeout
+
+Each task extraction request waits up to 420 seconds by default. Override it with:
+
+```bash
+TASK_REQUEST_TIMEOUT_SECONDS=420
+```
 
 ## Task Endpoints
 

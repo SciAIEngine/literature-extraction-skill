@@ -70,13 +70,13 @@ python scripts/call_extract_api.py \
 
 ## Environment
 
-Required:
+Required on the SciEngine task service side:
 
-```bash
-LLM_API_KEY=...
-```
+- Each task endpoint should provide its own default `LLM_API_KEY` or model credential.
+- The public skill should not require users to provide `LLM_API_KEY`.
+- If `LLM_API_KEY` is set locally, the script passes it for backward compatibility. If it is not set, the script omits it and lets the service use its server-side default.
 
-Optional:
+Optional client-side overrides:
 
 ```bash
 LLM_MODEL=deepseek-v4-flash
@@ -84,7 +84,7 @@ LLM_BASE_URL=https://api.deepseek.com
 LLM_STREAM=True
 MCP_SERVER_URL=https://sciengine.las.ac.cn/deconstructPdfMcp
 MCP_SHARED_TOKEN=...
-TASK_REQUEST_TIMEOUT_SECONDS=1800
+TASK_REQUEST_TIMEOUT_SECONDS=420
 ```
 
 Default endpoints and tools:

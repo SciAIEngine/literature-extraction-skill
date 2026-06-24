@@ -48,16 +48,13 @@ def parse_args():
 
 def api_config():
     api_key = os.environ.get("LLM_API_KEY")
-    if not api_key:
-        raise RuntimeError("Missing required environment variable: LLM_API_KEY")
-
     return {
         "llm_model": os.environ.get("LLM_MODEL", "deepseek-v4-flash"),
         "llm_api_key": api_key,
         "llm_base_url": os.environ.get("LLM_BASE_URL", "https://api.deepseek.com"),
         "stream": os.environ.get("LLM_STREAM", os.environ.get("LITERATURE_EXTRACT_STREAM", "True")),
         "mcp_access_token": os.environ.get("MCP_SHARED_TOKEN", ""),
-        "task_timeout": int(os.environ.get("TASK_REQUEST_TIMEOUT_SECONDS", "1800")),
+        "task_timeout": int(os.environ.get("TASK_REQUEST_TIMEOUT_SECONDS", "420")),
     }
 
 
@@ -227,11 +224,13 @@ def save_task_result(output_path, result):
 def call_one_task(task, input_path, output_path, extra_input, config):
     data = {
         "LLM_MODEL": config["llm_model"],
-        "LLM_API_KEY": config["llm_api_key"],
         "LLM_BASE_URL": config["llm_base_url"],
         "Stream": config["stream"],
         "extra_input": extra_input,
     }
+    if config["llm_api_key"]:
+        data["LLM_API_KEY"] = config["llm_api_key"]
+
     files = {"file": build_upload_file(task, input_path)}
     response = requests.post(
         task_endpoint_for(task),
